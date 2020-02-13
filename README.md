@@ -20,6 +20,8 @@ In case the end user has Windows 10 Focus Assist [link](https://support.microsof
 
 ### Detailed Flow
 #### Step 1: Sending the message
+- Sending a normal Teams message to a dedicated emergency channel
+![Single Team Message](images/Single-Team-Mesage.png)
 #### Step 2: Automation workflow (Power Automate/ Azure Logic App)
 - Listen to the message in a specific team and specific Channel
 - Once received, push the message to intermediate storage with the details (Azure Table)
