@@ -21,10 +21,19 @@ In case the end user has Windows 10 Focus Assist [link](https://support.microsof
 ### Detailed Flow
 #### Step 1: Sending the message
 - Sending a normal Teams message to a dedicated emergency channel
-![Single Team Message](images/Single-Team-Mesage.png)
+![Single Team Message](images/Teams-Message.png)
 #### Step 2: Automation workflow (Power Automate/ Azure Logic App)
 - Listen to the message in a specific team and specific Channel
+![Logic App](images/LogicApp.png)
 - Once received, push the message to intermediate storage with the details (Azure Table)
+![Storage Table](images/storage-table.png)
+- Each message will have a default expiry time of 30 minutes and active flag (true/false)
 #### Step 3: Windows Notifications
-- Notification Agent (Windows Tray Application) will check for new messages, and once received, display a clear blocking Windows Alert Message
+- Notification Agent (Windows Tray Application) will check for new messages.
+![Notification Agent](images/notification-agent-Windows.png)
+- Upon receiving a new message, display a clear blocking Windows Alert Message
+![Single Alert Message](images/Single-Team-Message.png)
+![Alert Window](images/emergency-alert.png)
+- The message will be repeated every 3 seconds until the expiry time passed.
+![Desktop](images/Full-desktop.png)
 
