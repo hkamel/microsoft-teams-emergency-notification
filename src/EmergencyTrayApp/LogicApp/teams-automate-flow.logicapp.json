@@ -1,0 +1,64 @@
+{
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "$connections": {
+            "defaultValue": {},
+            "type": "Object"
+        }
+    },
+    "triggers": {
+        "When_a_new_channel_message_is_added": {
+            "recurrence": {
+                "frequency": "Minute",
+                "interval": 1
+            },
+            "splitOn": "@triggerBody()",
+            "type": "ApiConnection",
+            "inputs": {
+                "host": {
+                    "connection": {
+                        "name": "@parameters('$connections')['teams']['connectionId']"
+                    }
+                },
+                "method": "get",
+                "path": "/trigger/beta/teams/@{encodeURIComponent('648dcc00-27bd-4e24-a053-93acf85e1edc')}/channels/@{encodeURIComponent('19:e20684dfd1904932b98bd6461d8400ba@thread.tacv2')}/messages",
+                "queries": {
+                    "$top": 50
+                }
+            }
+        }
+    },
+    "actions": {
+        "Compose": {
+            "runAfter": {},
+            "type": "Compose",
+            "inputs": {
+                "Active": 1,
+                "ExpireInMinutes": 30,
+                "Message": "@triggerBody()?['body']?['content']",
+                "PartitionKey": "@triggerBody()?['id']",
+                "RowKey": "@guid()"
+            }
+        },
+        "Insert_Entity": {
+            "runAfter": {
+                "Compose": [
+                    "Succeeded"
+                ]
+            },
+            "type": "ApiConnection",
+            "inputs": {
+                "body": "@outputs('Compose')",
+                "host": {
+                    "connection": {
+                        "name": "@parameters('$connections')['azuretables']['connectionId']"
+                    }
+                },
+                "method": "post",
+                "path": "/Tables/@{encodeURIComponent('EmergencyMessages')}/entities"
+            }
+        }
+    },
+    "outputs": {}
+}
