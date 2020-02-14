@@ -10,13 +10,13 @@ In case the end user has Windows 10 Focus Assist ([link](https://support.microso
 
 ## Proposed Solution/ Flow
 - Emergency agent or admin will send a normal message over a dedicated team channel
-- Using Power Automate/ Azure Logic App, the message being pushed to a table with the required information (message content and expiry in minutes)
-- A windows agent tray application (running on Windows machines) will pick any new message and alert the user through normal windows alert message box. A blocking message box in the center of the screen that must be dismissed by the customer.
+- Using Power Automate/ Azure Logic App, the message being pushed to a table with the required information (message content and expiry in minutes). Check the sample code here [src/EmergencyTrayApp/LogicApp](https://github.com/hkamel/microsoft-teams-emergency-notification/tree/master/src/EmergencyTrayApp/LogicApp)
+- A windows agent tray application (running on Windows machines) will pick any new message and alert the user through normal windows alert message box. A blocking message box in the center of the screen that must be dismissed by the customer. Check the sample code here [src/EmergencyTrayApp](https://github.com/hkamel/microsoft-teams-emergency-notification/tree/master/src/EmergencyTrayApp)
 - The Windows Application can be pushed to the end users using Configuration Manager.
 
 ### Limitations 
 - Only Windows clients 
-- MacOS and mobile Apps are supported in this solution
+- MacOS and mobile Apps are not supported in this solution
 - Teams APIs/Connector has a throttling limit https://docs.microsoft.com/en-us/connectors/teams/#limits
 
 ### Detailed Flow
